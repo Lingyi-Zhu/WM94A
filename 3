@@ -1,0 +1,55 @@
+import sqlite3
+
+# Connect to the database
+conn = sqlite3.connect('restaurant.db')
+
+# Create a table to store restaurant data
+conn.execute('''CREATE TABLE RESTAURANTS
+         (ID INT PRIMARY KEY     NOT NULL,
+         NAME           TEXT    NOT NULL,
+         LOCATION       TEXT    NOT NULL,
+         TYPE           TEXT    NOT NULL,
+         MANU           TEXT     NOT NULL);''')
+
+# Insert data into the table
+conn.execute("INSERT INTO RESTAURANTS (NAME, LOCATION, TYPE, MANU) \
+      VALUES ('Restaurant A', 'Building 1', 'Italian', 'Pizza, Pasta, Salad')")
+conn.execute("INSERT INTO RESTAURANTS (NAME, LOCATION, TYPE, MANU) \
+      VALUES ('Restaurant B', 'Building 2', 'Chinese', 'Dumplings, Noodles, Rice')")
+conn.execute("INSERT INTO RESTAURANTS (NAME, LOCATION, TYPE, MANU) \
+      VALUES ('Restaurant C', 'Building 3', 'Birthish', 'Tacos, Burritos, Quesadillas')")
+
+# Commit the changes
+conn.commit()
+
+# Connect to the database
+conn = sqlite3.connect('restaurant.db')
+
+# Create a cursor object
+cur = conn.cursor()
+
+# Execute a SELECT statement
+cur.execute("SELECT * FROM RESTAURANTS")
+
+# Fetch all the rows
+rows = cur.fetchall()
+
+# Print the rows
+for row in rows:
+    print(row)
+
+# Update a row
+cur.execute("UPDATE RESTAURANTS SET RATING = 5 WHERE ID = 1")
+
+# Delete a row
+cur.execute("DELETE FROM RESTAURANTS WHERE ID = 3")
+
+# Insert a new row
+cur.execute("INSERT INTO RESTAURANTS (ID, NAME, LOCATION, CUISINE, RATING) \
+      VALUES (4, 'Pizza Express', 'Leamington Spa', 'Italian', 4)")
+
+# Commit the changes
+conn.commit()
+
+# Close the connection
+conn.close()
