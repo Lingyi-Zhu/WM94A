@@ -1,0 +1,58 @@
+class RestaurantsManager:
+    def __init__(self):
+        self.restaurant = {}
+
+    def add_restaurant(self, restaurant_id, name, location, type, menu):
+        self.restaurant[restaurant_id] = {'name': name, 'location': location, 'type': type, 'menu': menu}
+
+    def remove_restaurant(self, restaurant_id):
+        if restaurant_id in self.restaurant:
+            del self.restaurant[restaurant_id]
+        else:
+            print("Restaurant not found.")
+
+    def get_restaurant(self, restaurant_id):
+        return self.restaurant.get(restaurant_id, "Restaurant not found.")
+
+    def update_restaurant(self, restaurant_id, **kwargs):
+        if restaurant_id in self.restaurant:
+            self.restaurant[restaurant_id].update(kwargs)
+        else:
+            print("Restaurant not found.")
+
+    def display_restaurants(self):
+        return self.restaurant
+        # for restaurant_id, restaurant_info in self.restaurant.items():
+        #     print(
+        #         f"ID: {restaurant_id}, Name: {restaurant_info['name']}, Location: {restaurant_info['location']}, Type: {restaurant_info['type']}, Menu: {restaurant_info['menu']}")
+
+
+# Example usage:
+if __name__ == "__main__":
+    manager = RestaurantsManager()
+
+    # Adding restaurants
+    manager.add_restaurant(1, "Restaurant A", "Building 1", "Italian", "Pizza, Pasta, Salad")
+    manager.add_restaurant(2, "Restaurant B", "Building 2", "Chinese", "Dumplings, Noodles, Rice")
+    manager.add_restaurant(3, "Restaurant C", "Building 3", "British", "Tacos, Burritos, Quesadillas")
+
+    # Displaying restaurants
+    manager.display_restaurants()
+
+    # Retrieving a specific restaurant
+    restaurant_id = 2
+    print("\nRetrieving Restaurant with ID:", restaurant_id)
+    print(manager.get_restaurant(restaurant_id))
+
+    # Updating a restaurant's information
+    restaurant_id = 1
+    manager.update_restaurant(restaurant_id, name="Restaurant A", location="Building 2", type="Chinese",
+                              menu="Dumplings, Noodles, Rice")
+    print("\nAfter updating Restaurant with ID:", restaurant_id)
+    manager.display_restaurants()
+
+    # Removing a restaurant
+    restaurant_id = 3
+    manager.remove_restaurant(restaurant_id)
+    print("\nAfter removing Restaurant with ID:", restaurant_id)
+    manager.display_restaurants()
