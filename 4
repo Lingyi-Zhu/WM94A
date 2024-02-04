@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Sample Web Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<script>
+    var url = "http://127.0.0.1:5000/api/restaurant"
+    $.get(url).done(function (res) {
+        var table = document.getElementById("restaurant-menu");
+        var newContent = "";
+
+        for (var key in res) {
+            var line = res[key];
+            newContent += "<tr>";
+            newContent += "<td>" + line["name"] + "</td>";
+            newContent += "<td>" + line["location"] + "</td>";
+            newContent += "<td>" + line["type"] + "</td>";
+            newContent += "<td>" + line["menu"] + "</td>";
+
+            newContent += "</tr>";
+        }
+
+        // Clear the existing content of the table
+        table.innerHTML = "";
+
+        // Append the new content to the table
+        table.innerHTML = newContent;
+    }).fail(function (e) {
+        console.log('error');
+    })
+</script>
+
+<body>
+<body>
+<nav id="Warwick">
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Accessories</a></li>
+        <li><a href="#">Dining</a></li>
+    </ul>
+</nav>
+
+<h1 class="restaurant-title">Warwick restaurant</h1>
+
+<p>Welcome to the restaurants in Warwick!</p>
+
+<h2>Stored Data</h2>
+
+<script>
+    // Function to open the modal
+    function openModal() {
+        var modal = document.getElementById("myModal");
+        // Display the modal
+        modal.style.display = "block";
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        var modal = document.getElementById("myModal");
+        // Hide the modal
+        modal.style.display = "none";
+    }
+
+    function submitComments() {
+        var restaurantListTextArea = document.getElementById("restaurantListTextArea");
+        var restaurantValue = restaurantListTextArea.value;
+
+        // Make a POST request to the backend
+        fetch('http://127.0.0.1:5000/restaurant', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ restaurant: restaurantValue }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response from the server if needed
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+        // Close the modal after submission
+        closeModal();
+    }
+</script>
+<button onclick="openModal()">Show Menu</button>
+<div id="myModal">
+    <span onclick="closeModal()" style="cursor: pointer; float: right;">&times;</span>
+    <h2>Restaurant Menu</h2>
+    <p>This is your restaurant menu:</p>
+
+    <!-- Add a text area for input -->
+    <textarea id="restaurantListTextArea" placeholder="Enter new restaurant..."></textarea>
+
+    <!-- Add a submit button -->
+    <button onclick="submitComments()">Submit</button>
+
+    <!-- Additional table for modal content will be dynamically generated here -->
+    <table id="modal-menu">
+    </table>
+</div>
+
+<table class="restaurant-menu">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Cuisine</th>
+        <th>Menu</th>
+    </tr>
+    </thead>
+    <tbody id="restaurant-menu">
+    <tr>
+        <td>Restaurant A</td>
+        <td>Building 1</td>
+        <td>Italian</td>
+        <td>Pizza, Pasta, Salad</td>
+    </tr>
+    <tr>
+        <td>Restaurant B</td>
+        <td>Building 2</td>
+        <td>Chinese</td>
+        <td>Dumplings, Noodles, Rice</td>
+    </tr>
+    <tr>
+        <td>Restaurant C</td>
+        <td>Building 3</td>
+        <td>Mexican</td>
+        <td>Tacos, Burritos, Quesadillas</td>
+    </tr>
+    </tbody>
+</table>
+
+<section class="restaurantA-description">
+    <h2>Restaurant A</h2>
+    <p>"Restaurant A" is a cozy Italian eatery nestled in "Building 1", offering a delectable array of classic Italian
+        dishes. Specializing in traditional flavors, their menu features mouthwatering options like freshly baked
+        pizzas, hearty pasta dishes, and crisp, refreshing salads. Guests can expect a warm ambiance and attentive
+        service, making it the perfect spot to indulge in authentic Italian cuisine.</p>
+    <ul>
+        <li>Pizza</li>
+        <img src="images/pizza.jpg" width="300px" alt="Pizza in Restaurant A">
+        <li>Pasta</li>
+        <img src="images/pasta.jpg" width="300px" alt="Pasta in Restaurant A">
+        <li>Salad</li>
+        <img src="images/salad.jpg" width="300px" alt="Salad in Restaurant A">
+    </ul>
+</section>
+
+<section class="restaurantA-customer-reviews">
+    <h2>Customer Reviews</h2>
+    <article class="review">
+        <h3>Review Title 1</h3>
+        <p>★★★★☆</p>
+        <p>Absolutely loved my experience at Restaurant A! The pizza was incredibly flavorful with a perfectly crispy
+            crust, and the pasta was cooked to perfection. The ambiance was cozy, and the staff were friendly and
+            attentive. Can't wait to come back for more!</p>
+    </article>
+    <article class="review">
+        <h3>Review Title 2</h3>
+        <p>★★★★★</p>
+        <p>A hidden gem in Building 1! The salad I had at Restaurant A was so fresh and delicious, and the dressing was
+            just divine. The portion sizes were generous, and the prices were reasonable for the quality of food. Highly
+            recommend trying it out!</p>
+    </article>
+    <article class="review">
+        <h3>Review Title 3</h3>
+        <p>★★★★★</p>
+        <p>Had a fantastic dinner at Restaurant A last night. The pasta carbonara was rich and creamy, and the garlic
+            bread that came with it was to die for. The service was top-notch, and the atmosphere was lovely. Will
+            definitely be returning soon!</p>
+    </article>
+</section>
+
+<section class="restaurantB-description">
+    <h2>Restaurant B</h2>
+    <p>"Restaurant B" is a vibrant Chinese eatery located in the heart of "Building 2". Specializing in authentic
+        Chinese cuisine, this restaurant offers a tantalizing selection of dumplings, noodles, and rice dishes. From
+        steaming baskets of dim sum to savory noodle soups and fragrant rice bowls, diners can expect a diverse menu
+        filled with bold flavors and traditional favorites. With its inviting atmosphere and attentive service,
+        Restaurant B is the perfect destination for those craving a taste of China.</p>
+    <ul>
+        <li>Dumplings</li>
+        <img src="images/dumplings.jpg" width="300px" alt="Dumplings in Restaurant B">
+        <li>Noodle</li>
+        <img src="images/noodle.jpg" width="300px" alt="Noodle in Restaurant B">
+        <li>Rice</li>
+        <img src="images/rice.jpg" width="300px" alt="Rice in Restaurant B">
+    </ul>
+</section>
+
+<section class="restaurantB-customer-reviews">
+    <h2>Customer Reviews</h2>
+    <article class="review">
+        <h3>Review Title 1</h3>
+        <p>★★★★☆</p>
+        <p>Restaurant B is my go-to spot for delicious Chinese cuisine! The dumplings are always perfectly steamed with
+            flavorful fillings, and the noodle dishes never disappoint. The staff is friendly and welcoming, and the
+            ambiance is lively. Highly recommend trying their hand-pulled noodles!</p>
+    </article>
+    <article class="review">
+        <h3>Review Title 2</h3>
+        <p>★★★★★</p>
+        <p>Restaurant B never disappoints! The variety of dishes they offer is impressive, and everything is
+            consistently delicious. Whether you're craving dumplings, noodles, or rice dishes, you'll find something to
+            satisfy your taste buds here. The prices are affordable, making it a great value for the quality of food you
+            receive. Highly recommend giving it a try!</p>
+    </article>
+    <article class="review">
+        <h3>Review Title 3</h3>
+        <p>★★★★★</p>
+        <p>Absolutely love Restaurant B! The dumplings are handmade and simply melt in your mouth, and the noodle dishes
+            are so flavorful. The restaurant has a welcoming ambiance, and the staff are always attentive and friendly.
+            It's become my favorite spot for authentic Chinese cuisine in the area!</p>
+    </article>
+</section>
+
+<section class="restaurantC-description">
+    <h2>Restaurant C</h2>
+    <p>"Restaurant C" offers a unique twist on British cuisine in the heart of "Building 3". Specializing in a fusion of
+        British and Mexican flavors, this cozy eatery serves up a tantalizing array of tacos, burritos, and quesadillas.
+        Diners can indulge in creative combinations that blend traditional British ingredients with classic Mexican
+        fare, resulting in an exciting culinary experience. With its inviting atmosphere and flavorful dishes,
+        Restaurant C is a must-visit for those seeking a delightful fusion of flavors from across the pond and south of
+        the border.</p>
+    <ul>
+        <li>Tacos</li>
+        <img src="images/Tacos.jpg" width="300px" alt="Tacos in Restaurant C">
+        <li>Burritos</li>
+        <img src="images/burritos.jpg" width="300px" alt="Burritos in Restaurant C">
+        <li>Quesadillas</li>
+        <img src="images/quesadillas.jpg" width="300px" alt="Quesadillas in Restaurant C">
+    </ul>
+</section>
+
+<section class="restaurantC-customer-reviews">
+    <h2>Customer Reviews</h2>
+    <article class="review">
+        <h3>Review Title 1</h3>
+        <p>★★★★☆</p>
+        <p>Restaurant C is a delightful surprise! The fusion of British and Mexican cuisines creates a unique dining
+            experience. The tacos were bursting with flavor, and the quesadillas were perfectly cheesy. The atmosphere
+            is cozy, and the staff are friendly. Can't wait to come back and try more dishes!</p>
+    </article>
+    <article class="review">
+        <h3>Review Title 2</h3>
+        <p>★★★★★</p>
+        <p>What a creative concept at Restaurant C! The British-Mexican fusion is executed flawlessly, resulting in some
+            of the most delicious tacos and burritos I've ever had. The combination of traditional British ingredients
+            with Mexican spices is genius. The service was excellent, and the ambiance was cozy. Highly recommend for a
+            unique dining experience!</p>
+    </article>
+    <article class="review">
+        <h3>Review Title 3</h3>
+        <p>★★★★★</p>
+        <p>Restaurant C exceeded my expectations! The burritos were generously stuffed with flavorful fillings, and the
+            quesadillas were perfectly crispy on the outside and gooey on the inside. The fusion of British and Mexican
+            cuisines is executed with precision, creating a truly memorable dining experience. The staff were attentive,
+            and the atmosphere was inviting. Will definitely be back for more!</p>
+    </article>
+</section>
+
+<h2>Retrieved Data</h2>
+<p>Here is the menu for Restaurant A:</p>
+<ul>
+    <li>Pizza</li>
+    <li>Pasta</li>
+    <li>Salad</li>
+</ul>
+<h2>Manipulated Data</h2>
+<p>We have updated the menu for Restaurant A:</p>
+<ul>
+    <li>Pizza</li>
+    <li>Pasta</li>
+    <li>Salad</li>
+    <li>Garlic Bread</li>
+    <li>Tiramisu</li>
+</ul>
+<h2>Managed Data</h2>
+<p>You have successfully placed an order for Pizza and Tiramisu from Restaurant A!</p>
+</body>
+</html>
